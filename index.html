@@ -199,7 +199,7 @@
             });
         });
 
-        let sExp, sRecord = "", bRecord = false;
+        let sExp;
         let aDiagram = [], aA = [], aB = [], aC = [], aTemp = [];
         let aSigns = ['⋃', '⋂', '\\', 'Δ'], aLetters = ['A', 'B', 'C'];
 
@@ -207,11 +207,13 @@
             for (let i = 0; i < 8; i++) {
                 aDiagram[i] = { bVal: false };
             }
+
             aA = [aDiagram[1], aDiagram[2], aDiagram[4], aDiagram[5]]
             aB = [aDiagram[2], aDiagram[3], aDiagram[5], aDiagram[6]]
             aC = [aDiagram[4], aDiagram[5], aDiagram[6], aDiagram[7]]
             sExp = $("input").val();
             console.log(sExp);
+            sTransExp = "";
             step(sExp);
             eval(sTransExp);
             showOnDiagram();
@@ -266,6 +268,9 @@
             for (let i = 0; i < 8; i++) {
                 if (aDiagram[i].bVal) {
                     $("#p" + i).show();
+                }
+                if (!aDiagram[i].bVal) {
+                    $("#p" + i).hide();
                 }
             }
             $("#expression").text(sExp);
