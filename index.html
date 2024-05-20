@@ -83,7 +83,7 @@
 
         .keys:active,
         button:active {
-            filter: brightness(0.95);
+            filter: brightness(0.9);
         }
 
         #diagram {
@@ -160,7 +160,7 @@
     <h1> Diagram view </h1>
     <div id="container">
         <div id="input-container">
-            <h2>Enter expression</h2>
+            <h2>Enter the expression</h2>
             <input type="text" />
             <div class="keys par">&lpar;</div>
             <div class="keys par">&rpar;</div>
@@ -220,7 +220,7 @@
             showOnDiagram();
         }
 
-        let sTransExp = "", sTransNotSet;
+        let sTransExp = "";
         function step(sCurrExp) {
             console.log(sCurrExp);
             let nParC = 0;
@@ -259,6 +259,7 @@
                 }
             }
             if (sTransExp == "" && aLetters.includes(sCurrExp.charAt(sCurrExp.length - 2)) && sCurrExp.charAt(sCurrExp.length - 1) == '\'') sTransExp = sTransExp + "s5(a" + sCurrExp.charAt(sCurrExp.length - 2);
+            else if(sTransExp == "" && aLetters.includes(sCurrExp)) sTransExp = "s1(a" + sCurrExp + ", a" + sCurrExp;
             sTransExp = sTransExp + ")";
             if (sTransExp == ")" && sCurrExp.charAt(sCurrExp.length - 1) == '\'' && sCurrExp.charAt(sCurrExp.length - 2) == ')' && sCurrExp.charAt(0) == '(') {
                 sTransExp = sTransExp.substring(0, sTransExp.length - 1);
