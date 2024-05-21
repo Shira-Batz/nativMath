@@ -161,7 +161,7 @@
     <div id="container">
         <div id="input-container">
             <h2>Enter expression</h2>
-            <input type="text" />
+            <input type="text" onclick="currIndex(event)" onkeyup="currIndex(event)" onfocus="currIndex(event)" />
             <div class="keys par">&lpar;</div>
             <div class="keys par">&rpar;</div>
             <div class="keys letter">A</div>
@@ -186,9 +186,10 @@
         </div>
     </div>
     <script>
+        let nCurrIndex;
         $(function () {
             $(".keys").on("click", function () {
-                $("input").val($("input").val() + $(this).text());
+                $("input").val($("input").val().slice(0, nCurrIndex) + $(this).text() + $("input").val().slice(nCurrIndex));
                 $("input").focus();
             });
             $("input").on("keypress", function (e) {
@@ -198,6 +199,11 @@
                 }
             });
         });
+
+        function currIndex(event) {
+            nCurrIndex = event.target.selectionStart;
+            console.log(nCurrIndex)
+        }
 
         let sExp;
         let aDiagram = [], aA = [], aB = [], aC = [], aTemp = [];
@@ -214,11 +220,57 @@
             sExp = $("input").val();
             console.log(sExp);
             sTransExp = "";
-            step(sExp);
-            lastStep();
-            eval(sTransExp);
-            showOnDiagram();
+            testInput();
         }
+
+        let aSignInRowC = [];
+        function testInput() {
+            let nParC = 0, nLtrC = 0, nSignC = 0, bChars = true;
+            aSignInRowC[0] = new Array();
+            for (let i = 0; i < sExp.length; i++) {
+                if (sExp.charAt(i) == '(') {
+                    nParC++;
+                    aSignInRowC[nParC] = new Array();
+                }
+                else if (sExp.charAt(i) == ')') {
+                    aSignInRowC[nParC][aSignInRowC[nParC].length] = i;
+                    nParC--;
+                }
+                else if (aLetters.includes(sExp.charAt(i))) nLtrC++;
+                else if (aSigns.includes(sExp.charAt(i))) {
+                    nSignC++;
+                    aSignInRowC[nParC][aSignInRowC[nParC].length] = i;
+                }
+                else if (sExp.charAt(i) != '\'') {
+                    bChars = false;
+                    break;
+                }
+                if(i + 1 == sExp.length) aSignInRowC[nParC][aSignInRowC[nParC].length] = i + 1;
+            }
+            if (nParC != 0 || nLtrC - 1 != nSignC || !bChars) alert("בעיה עם הביטוי");
+            else {
+                addPar();
+                step(sExp);
+                lastStep();
+                eval(sTransExp);
+                showOnDiagram();
+            }
+        }
+
+        function addPar() {
+            for(let i = 0; i < aSignInRowC.length; i++) {
+                if(aSignInRowC[i].length > 2) {
+                    for(let j = 1; j < aSignInRowC[i].length - 1; j++) {
+                        sExp = sExp.slice(0, aSignInRowC[i][j-1] + 1) + "(" + sExp.slice(aSignInRowC[i][j-1] + 1, aSignInRowC[i].slice(-1)) + ")" + sExp.slice(aSignInRowC[i].slice(-1));
+                    }
+                }
+            }
+        }
+
+        window.onerror = function () {
+            alert("בעיה עם הביטוי");
+            return true;
+        };
 
         let sTransExp = "";
         function step(sCurrExp) {
@@ -259,7 +311,7 @@
                 }
             }
             if (sTransExp == "" && aLetters.includes(sCurrExp.charAt(sCurrExp.length - 2)) && sCurrExp.charAt(sCurrExp.length - 1) == '\'') sTransExp = sTransExp + "s5(a" + sCurrExp.charAt(sCurrExp.length - 2);
-            else if(sTransExp == "" && aLetters.includes(sCurrExp)) sTransExp = "s1(a" + sCurrExp + ", a" + sCurrExp;
+            else if (sTransExp == "" && aLetters.includes(sCurrExp)) sTransExp = "s1(a" + sCurrExp + ", a" + sCurrExp;
             sTransExp = sTransExp + ")";
             if (sTransExp == ")" && sCurrExp.charAt(sCurrExp.length - 1) == '\'' && sCurrExp.charAt(sCurrExp.length - 2) == ')' && sCurrExp.charAt(0) == '(') {
                 sTransExp = sTransExp.substring(0, sTransExp.length - 1);
@@ -284,9 +336,9 @@
                     for (let j = i + 5; j < sTransExp.length; j++) {
                         if (sTransExp.charAt(j) == '(') nParC2++;
                         else if (sTransExp.charAt(j) == ')') nParC2--;
-                        if(nParC == nParC2) {
+                        if (nParC == nParC2) {
                             console.log(sTransExp.charAt(j));
-                            sTransExp = sTransExp.slice(0, j + 1) + ')' +sTransExp.slice(j + 1);
+                            sTransExp = sTransExp.slice(0, j + 1) + ')' + sTransExp.slice(j + 1);
                             break;
                         }
                     }
