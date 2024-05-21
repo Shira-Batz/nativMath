@@ -245,7 +245,7 @@
                     bChars = false;
                     break;
                 }
-                if(i + 1 == sExp.length) aSignInRowC[nParC][aSignInRowC[nParC].length] = i + 1;
+                if (i + 1 == sExp.length) aSignInRowC[nParC][aSignInRowC[nParC].length] = i + 1;
             }
             if (nParC != 0 || nLtrC - 1 != nSignC || !bChars) alert("בעיה עם הביטוי");
             else {
@@ -258,10 +258,10 @@
         }
 
         function addPar() {
-            for(let i = 0; i < aSignInRowC.length; i++) {
-                if(aSignInRowC[i].length > 2) {
-                    for(let j = 1; j < aSignInRowC[i].length - 1; j++) {
-                        sExp = sExp.slice(0, aSignInRowC[i][j-1] + 1 + j - 1) + "(" + sExp.slice(aSignInRowC[i][j-1] + 1 + j - 1, aSignInRowC[i].slice(-1) + j - 1) + ")" + sExp.slice(aSignInRowC[i].slice(-1) + j - 1);
+            for (let i = 0; i < aSignInRowC.length; i++) {
+                if (aSignInRowC[i].length > 2) {
+                    for (let j = 1; j < aSignInRowC[i].length - 1; j++) {
+                        sExp = sExp.slice(0, aSignInRowC[i][j - 1] + 1 + j - 1) + "(" + sExp.slice(aSignInRowC[i][j - 1] + 1 + j - 1, aSignInRowC[i][aSignInRowC[i].length - 1] + j - 1) + ")" + sExp.slice(aSignInRowC[i][aSignInRowC[i].length - 1] + j - 1);
                         console.log(sExp);
                     }
                 }
