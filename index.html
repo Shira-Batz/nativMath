@@ -31,8 +31,8 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: rgb(231, 231, 231);
-            color: rgb(39, 44, 49);
+            background-color: #f0f4f8;
+            color: #333;
             text-align: center;
             display: flex;
             flex-direction: column;
@@ -51,41 +51,55 @@
             padding: 2rem;
             width: 20rem;
             display: inline-block;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
-            background-color: rgb(243, 241, 241);
+            background-color: #ffffff;
         }
 
         input {
             width: 100%;
             margin: 0.25rem 0 0.5rem;
+            padding: 0.5rem;
             border-radius: 5px;
-            border: 1.5px solid rgb(152, 152, 152);
-            font-size: 1.4rem;
+            border: 1.5px solid #ced4da;
+            font-size: 1.2rem;
+            transition: border-color 0.25s, box-shadow 0.25s;
+        }
+
+        input:focus {
+            border-color: #80bdff;
+            box-shadow: 0 0 8px 0 rgba(128, 189, 255, 0.5);
+            outline: none;
         }
 
         .keys {
             display: inline-flex;
-            background-color: #4aad87;
+            background-color: hsl(211, 86%, 55%);
             color: #fff;
             width: 3rem;
-            height: 2.5rem;
+            height: 3rem;
             margin: 0.35rem;
             justify-content: center;
             align-items: center;
             font-weight: 500;
-            box-shadow: 0 0 4px rgba(0, 0, 0, 0.15);
-            transition: cubic-bezier(0.165, 0.84, 0.44, 1) 0.25s;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.25s, transform 0.25s;
+            cursor: pointer;
         }
 
         .letter {
-            background-color: #3e7fca;
+            background-color: hsl(134, 61%, 41%);
         }
 
         .par {
-            background-color: #e6ae22;
+            background-color: hsl(45, 95%, 55%);
         }
+
+        /* .keys:hover {
+            transform: scale(1.1);
+        } */
 
         .keys:active,
         button:active {
@@ -193,7 +207,7 @@
         </div>
     </div>
     <footer
-        style="width: 100%; padding: 0.3rem 0; background-color: rgb(58, 54, 52); color: whitesmoke; font-size: 0.8rem; user-select: text;">
+        style="width: 100%; padding: 0.3rem 0; background-color: #343a40; color: #f8f9fa; font-size: 0.8rem; user-select: text;">
         Shira Batz</footer>
     <script>
         let nCurrIndex;
