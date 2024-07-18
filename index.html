@@ -227,7 +227,6 @@
 
         function currIndex(event) {
             nCurrIndex = event.target.selectionStart;
-            console.log(nCurrIndex)
         }
 
         let sExp;
@@ -253,13 +252,14 @@
             aSignInRowC = [];
             let nParC = 0, nLtrC = 0, nSignC = 0, bChars = true;
             aSignInRowC[0] = new Array();
+            aSignInRowC[0][0] = -1;
             for (let i = 0; i < sExp.length; i++) {
                 if (sExp.charAt(i) == '(') {
                     nParC++;
                     aSignInRowC[nParC] = new Array();
+                    aSignInRowC[nParC][0] = i;
                 }
                 else if (sExp.charAt(i) == ')') {
-                    aSignInRowC[nParC][aSignInRowC[nParC].length] = i;
                     nParC--;
                 }
                 else if (aLetters.includes(sExp.charAt(i))) nLtrC++;
@@ -271,7 +271,6 @@
                     bChars = false;
                     break;
                 }
-                if (i + 1 == sExp.length) aSignInRowC[nParC][aSignInRowC[nParC].length] = i + 1;
             }
             if (nParC != 0 || nLtrC - 1 != nSignC || !bChars) alert("בעיה עם הביטוי");
             else {
@@ -286,18 +285,29 @@
         function addPar() {
             for (let i = 0; i < aSignInRowC.length; i++) {
                 if (aSignInRowC[i].length > 2) {
-                    for (let j = 1; j < aSignInRowC[i].length - 1; j++) {
-                        sExp = sExp.slice(0, aSignInRowC[i][j - 1] + 1 + j - 1) + "(" + sExp.slice(aSignInRowC[i][j - 1] + 1 + j - 1, aSignInRowC[i][aSignInRowC[i].length - 1] + j - 1) + ")" + sExp.slice(aSignInRowC[i][aSignInRowC[i].length - 1] + j - 1);
+                    for (let j = 2; j < aSignInRowC[i].length; j++) {
+                        // sExp = sExp.slice(0, aSignInRowC[i][j - 1] + 1 + j - 1) + "(" + sExp.slice(aSignInRowC[i][j - 1] + 1 + j - 1, aSignInRowC[i][aSignInRowC[i].length - 1] + j - 1) + ")" + sExp.slice(aSignInRowC[i][aSignInRowC[i].length - 1] + j - 1);
+                        sExp = sExp.slice(0, aSignInRowC[i][0] + 1) + "(" + sExp.slice(aSignInRowC[i][0] + 1, aSignInRowC[i][j]) + ")" + sExp.slice(aSignInRowC[i][j], sExp.length);
                         console.log(sExp);
+                        for(let k = 0; k < aSignInRowC.length; k++) {
+                            for(let l = 0; l < aSignInRowC[k].length; l++) {
+                                if(aSignInRowC[k][l] > aSignInRowC[i][0] + 1) {
+                                    aSignInRowC[k][l]++;
+                                }
+                                if(aSignInRowC[k][l] > aSignInRowC[i][j]) {
+                                    aSignInRowC[k][l]++;
+                                }
+                            }
+                        }
                     }
                 }
             }
         }
 
-        window.onerror = function () {
-            alert("בעיה עם הביטוי");
-            return true;
-        };
+        // window.onerror = function () {
+        //     alert("בעיה עם הביטוי");
+        //     return true;
+        // };
 
         let sTransExp = "";
         function step(sCurrExp) {
