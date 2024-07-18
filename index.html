@@ -233,6 +233,7 @@
         let aDiagram = [], aA = [], aB = [], aC = [], aTemp = [];
         let aSigns = ['⋃', '⋂', '\\', 'Δ'], aLetters = ['A', 'B', 'C'];
 
+// Clean the diagram
         function solve() {
             for (let i = 0; i < 8; i++) {
                 aDiagram[i] = { bVal: false };
@@ -247,6 +248,7 @@
             testInput();
         }
 
+// Test the input and add check when needed to add parenthesis
         let aSignInRowC = [];
         function testInput() {
             aSignInRowC = [];
@@ -282,6 +284,7 @@
             }
         }
 
+// Add parenthesis
         function addPar() {
             for (let i = 0; i < aSignInRowC.length; i++) {
                 if (aSignInRowC[i].length > 2) {
@@ -303,11 +306,13 @@
             }
         }
 
+// Stop in case of an error
         window.onerror = function () {
             alert("בעיה עם הביטוי");
             return true;
         };
 
+//creat all the operations needs to happend
         let sTransExp = "";
         function step(sCurrExp) {
             console.log(sCurrExp);
@@ -361,6 +366,7 @@
             console.log(sTransExp);
         }
 
+// Add the operation s5        
         function lastStep() {
             let nParC = 0, nParC2 = 0;
             for (let i = 0; i < sTransExp.length; i++) {
