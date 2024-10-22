@@ -107,7 +107,7 @@
             filter: brightness(0.9);
         }
 
-        #diagram {
+        .diagram {
             position: relative;
             margin: 1rem;
             background-image: url('diagram.png');
@@ -121,49 +121,49 @@
             display: none;
         }
 
-        #p0 {
+        .p0 {
             width: 17.5rem;
             left: 0.05rem;
             top: 0.05rem;
         }
 
-        #p1 {
+        .p1 {
             width: 8rem;
             left: 0.8rem;
             top: 0.8rem;
         }
 
-        #p3 {
+        .p3 {
             width: 8rem;
             left: 8.8rem;
             top: 0.8rem;
         }
 
-        #p7 {
+        .p7 {
             width: 10.6rem;
             left: 3.53rem;
             bottom: 0.8rem;
         }
 
-        #p2 {
+        .p2 {
             width: 5.25rem;
             left: 6.15rem;
             top: 1.6rem;
         }
 
-        #p6 {
+        .p6 {
             width: 5.1rem;
             right: 3.6rem;
             top: 6.95rem;
         }
 
-        #p4 {
+        .p4 {
             width: 5.1rem;
             left: 3.6rem;
             top: 6.95rem;
         }
 
-        #p5 {
+        .p5 {
             width: 5rem;
             left: 6.3rem;
             top: 6.25rem;
@@ -174,6 +174,10 @@
             bottom: 0.3rem;
             left: 0.3rem;
             user-select: text;
+        }
+        #practice-diagram > .diagram-part {
+            filter: hue-rotate(325deg);
+            display: initial;
         }
     </style>
 </head>
@@ -195,16 +199,27 @@
             <div class="keys">&Delta;</div>
             <div class="keys">'</div>
         </div>
-        <div id="diagram">
-            <img class="diagram-part" id="p0" src="nAnBnC.png" />
-            <img class="diagram-part" id="p1" src="yAnBnC.png" />
-            <img class="diagram-part" id="p2" src="yAyBnC.png" />
-            <img class="diagram-part" id="p3" src="nAyBnC.png" />
-            <img class="diagram-part" id="p4" src="yAnByC.png" />
-            <img class="diagram-part" id="p5" src="yAyByC.png" />
-            <img class="diagram-part" id="p6" src="nAyByC.png" />
-            <img class="diagram-part" id="p7" src="nAnByC.png" />
+        <div class="diagram" id="diagram">
+            <img class="diagram-part p0" id="p0" src="nAnBnC.png" />
+            <img class="diagram-part p1" id="p1" src="yAnBnC.png" />
+            <img class="diagram-part p2" id="p2" src="yAyBnC.png" />
+            <img class="diagram-part p3" id="p3" src="nAyBnC.png" />
+            <img class="diagram-part p4" id="p4" src="yAnByC.png" />
+            <img class="diagram-part p5" id="p5" src="yAyByC.png" />
+            <img class="diagram-part p6" id="p6" src="nAyByC.png" />
+            <img class="diagram-part p7" id="p7" src="nAnByC.png" />
             <span id="expression"></span>
+        </div>
+        <div class="diagram" id="practice-diagram">
+            <img class="diagram-part p0" src="nAnBnC.png" />
+            <img class="diagram-part p1" src="yAnBnC.png" />
+            <img class="diagram-part p2" src="yAyBnC.png" />
+            <img class="diagram-part p3" src="nAyBnC.png" />
+            <img class="diagram-part p4" src="yAnByC.png" />
+            <img class="diagram-part p5" src="yAyByC.png" />
+            <img class="diagram-part p6" src="nAyByC.png" />
+            <img class="diagram-part p7" src="nAnByC.png" />
+            <span></span>
         </div>
     </div>
     <footer
@@ -213,6 +228,15 @@
     <script>
         let nCurrIndex;
         $(function () {
+            $("#practice-diagram > .diagram-part").on("click", function() {
+                console.log($(this).css("opacity") + $(this).attr("class"))
+                if ($(this).css("opacity") == "0") {
+                    $(this).css("opacity", "1")
+                }
+                else {
+                    $(this).css("opacity", "0")
+                }
+            });
             $(".keys").on("click", function () {
                 $("input").val($("input").val().slice(0, nCurrIndex) + $(this).text() + $("input").val().slice(nCurrIndex));
                 $("input").focus();
